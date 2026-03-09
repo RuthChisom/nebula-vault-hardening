@@ -1,8 +1,8 @@
 # SECURITY AUDIT & HARDENING REPORT: NEBULA YIELD PROTOCOL
 
-**Prepared by:** Ruth Chisom
-**Web3Bridge Eviction Test:** Ruth Chisom
-**Subject:** Hardened Vault Architecture 
+**Prepared by:** Ruth Chisom  
+**For:** Web3Bridge Eviction Test  
+**Subject:** Hardened Vault Architecture  
 **Status:** Secured & Verified  
 **Date:** March 9, 2026
 

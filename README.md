@@ -86,3 +86,9 @@ forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast --verify
 
 ## 📜 License
 This project is licensed under the **MIT License**.
+
+## Security Analysis
+
+A detailed security review and threat model can be found in:
+
+➡️ SECURITY_REPORT.md

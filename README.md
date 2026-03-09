@@ -91,4 +91,4 @@ This project is licensed under the **MIT License**.
 
 A detailed security review and threat model can be found in:
 
-➡️ SECURITY_REPORT.md
+➡️ [SECURITY_REPORT.md](https://github.com/RuthChisom/nebula-vault-hardening/blob/master/SECURITY_REPORT.md)

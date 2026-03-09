@@ -13,12 +13,12 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, ReentrancyGuard {
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
     
-    uint256 public override threshold;
-    uint256 public override txCount;
-    uint256 public constant override TIMELOCK_DURATION = 1 hours;
+    uint256 public threshold;
+    uint256 public txCount;
+    uint256 public constant TIMELOCK_DURATION = 1 hours;
     
-    mapping(uint256 => Transaction) public override transactions;
-    mapping(uint256 => mapping(address => bool)) public override confirmed;
+    mapping(uint256 => Transaction) public transactions;
+    mapping(uint256 => mapping(address => bool)) public confirmed;
 
     modifier onlyOwner() {
         require(hasRole(OWNER_ROLE, msg.sender), "Multisig: caller is not an owner");
@@ -39,10 +39,6 @@ abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, Reentranc
         threshold = _threshold;
     }
 
-    /**
-     * @dev Sets a new threshold for transaction execution.
-     * Can only be called by the multisig itself via an executed transaction.
-     */
     function setThreshold(uint256 _threshold) external {
         require(msg.sender == address(this), "Multisig: only self-call");
         require(_threshold > 0, "Multisig: invalid threshold");
@@ -53,7 +49,7 @@ abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, Reentranc
         address to,
         uint256 value,
         bytes calldata data
-    ) external override onlyOwner returns (uint256 txId) {
+    ) external virtual override onlyOwner returns (uint256 txId) {
         require(to != address(0), "Multisig: zero address recipient");
         
         txId = txCount++;
@@ -71,7 +67,7 @@ abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, Reentranc
         _confirmTransaction(txId, msg.sender);
     }
 
-    function confirmTransaction(uint256 txId) external override onlyOwner {
+    function confirmTransaction(uint256 txId) external virtual override onlyOwner {
         _confirmTransaction(txId, msg.sender);
     }
 
@@ -91,7 +87,7 @@ abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, Reentranc
         }
     }
 
-    function executeTransaction(uint256 txId) external payable override nonReentrant {
+    function executeTransaction(uint256 txId) public payable virtual override nonReentrant {
         Transaction storage txn = transactions[txId];
         require(txn.confirmations >= threshold, "Multisig: threshold not met");
         require(!txn.executed, "Multisig: tx already executed");
@@ -103,21 +99,21 @@ abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, Reentranc
         if (success) {
             emit Execution(txId);
         } else {
-            txn.executed = false; // Allow retry or fix
+            txn.executed = false; 
             emit ExecutionFailure(txId);
             revert("Multisig: transaction execution failed");
         }
     }
 
-    function isOwner(address account) public view override returns (bool) {
+    function isOwner(address account) public view virtual override returns (bool) {
         return hasRole(OWNER_ROLE, account);
     }
 
-    function getThreshold() public view override returns (uint256) {
+    function getThreshold() public view virtual override returns (uint256) {
         return threshold;
     }
 
-    function getMinExecutionTime(uint256 submissionTime) external pure override returns (uint256) {
+    function getMinExecutionTime(uint256 submissionTime) external pure virtual override returns (uint256) {
         return submissionTime + TIMELOCK_DURATION;
     }
 }

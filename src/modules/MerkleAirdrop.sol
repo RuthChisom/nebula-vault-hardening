@@ -6,23 +6,22 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-// Logic for Merkle-based airdrop claims with administrative controls.
+/**
+ * @title MerkleAirdrop
+ * @notice Logic for Merkle-based airdrop claims with administrative controls.
+ */
 abstract contract MerkleAirdrop is IAirdrop, AccessControl, ReentrancyGuard {
     bytes32 public constant AIRDROP_MANAGER_ROLE = keccak256("AIRDROP_MANAGER_ROLE");
     
-    bytes32 public override merkleRoot;
-    mapping(address => bool) public override claimed;
+    bytes32 public merkleRoot;
+    mapping(address => bool) public claimed;
 
-    // Sets the Merkle root for claims - Restricted to addresses with the AIRDROP_MANAGER_ROLE.
-    function setMerkleRoot(bytes32 root) external override onlyRole(AIRDROP_MANAGER_ROLE) {
+    function setMerkleRoot(bytes32 root) external virtual override onlyRole(AIRDROP_MANAGER_ROLE) {
         merkleRoot = root;
         emit MerkleRootSet(root);
     }
 
-    /**
-     * @dev Allows a user to claim their allocated amount by providing a Merkle proof.
-     */
-    function claim(bytes32[] calldata proof, uint256 amount) external override nonReentrant {
+    function claim(bytes32[] calldata proof, uint256 amount) public virtual override nonReentrant {
         require(merkleRoot != bytes32(0), "Airdrop: root not set");
         require(!claimed[msg.sender], "Airdrop: already claimed");
 
@@ -37,7 +36,7 @@ abstract contract MerkleAirdrop is IAirdrop, AccessControl, ReentrancyGuard {
         emit Claim(msg.sender, amount);
     }
 
-    function isClaimed(address account) external view override returns (bool) {
+    function isClaimed(address account) external view virtual override returns (bool) {
         return claimed[account];
     }
 }

@@ -5,8 +5,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /**
- * @title PauseModule
- * @notice Implements a secure pausing mechanism.
+ * Implements a secure pausing mechanism.
  * pause() is restricted to the multisig (PAUSER_ROLE).
  * unpause() requires a 24-hour timelock after being requested.
  */
@@ -25,7 +24,7 @@ abstract contract PauseModule is Pausable, AccessControl {
     }
 
     /**
-     * @dev Immediately pauses the contract.
+     * Immediately pauses the contract.
      * Restricted to PAUSER_ROLE (intended for the Multisig).
      */
     function pause() external onlyRole(PAUSER_ROLE) {
@@ -33,17 +32,13 @@ abstract contract PauseModule is Pausable, AccessControl {
         unpauseTimestamp = 0; // Reset any pending unpause
     }
 
-    /**
-     * @dev Initiates the 24-hour timelock for unpausing.
-     */
+    // Initiates the 24-hour timelock for unpausing.
     function requestUnpause() external onlyRole(UNPAUSER_ROLE) whenPaused {
         unpauseTimestamp = block.timestamp + UNPAUSE_DELAY;
         emit UnpauseRequested(msg.sender, unpauseTimestamp);
     }
 
-    /**
-     * @dev Executes the unpause after the 24-hour delay has passed.
-     */
+    //Executes the unpause after the 24-hour delay has passed.
     function unpause() external onlyRole(UNPAUSER_ROLE) whenPaused {
         require(unpauseTimestamp != 0, "PauseModule: unpause not requested");
         require(block.timestamp >= unpauseTimestamp, "PauseModule: timelock not expired");
@@ -52,9 +47,7 @@ abstract contract PauseModule is Pausable, AccessControl {
         _unpause();
     }
 
-    /**
-     * @dev Allows cancelling a pending unpause request.
-     */
+    // Allows cancelling a pending unpause request.
     function cancelUnpause() external onlyRole(PAUSER_ROLE) {
         unpauseTimestamp = 0;
         emit UnpauseCancelled(msg.sender);

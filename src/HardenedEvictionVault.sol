@@ -8,8 +8,8 @@ import "./modules/PauseModule.sol";
 import "./modules/SignatureUtils.sol";
 
 /**
- * @title HardenedEvictionVault
- * @notice A professional, modular vault architecture that hardens the original EvictionVault.
+ * HardenedEvictionVault
+ * A professional, modular vault architecture that hardens the original EvictionVault.
  */
 contract HardenedEvictionVault is 
     IVault, 

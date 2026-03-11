@@ -5,8 +5,8 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
- * @title TimelockExecutor
- * @notice Implements a secure timelock for transaction execution with a 1-hour delay.
+ * TimelockExecutor
+ * Implements a secure timelock for transaction execution with a 1-hour delay.
  * Designed to be used as a modular component in the vault architecture.
  */
 contract TimelockExecutor is AccessControl, ReentrancyGuard {
@@ -32,7 +32,7 @@ contract TimelockExecutor is AccessControl, ReentrancyGuard {
     }
 
     /**
-     * @dev Queues a transaction for future execution.
+     * Queues a transaction for future execution.
      * @param target The address of the contract to call.
      * @param value The amount of ETH to send.
      * @param signature The function signature (e.g., "transfer(address,uint256)").
@@ -57,9 +57,7 @@ contract TimelockExecutor is AccessControl, ReentrancyGuard {
         return txHash;
     }
 
-    /**
-     * @dev Cancels a previously queued transaction.
-     */
+    // Cancels a previously queued transaction.
     function cancelTransaction(
         address target,
         uint256 value,
@@ -75,9 +73,7 @@ contract TimelockExecutor is AccessControl, ReentrancyGuard {
         emit TransactionCancelled(txHash, target, value, signature, data);
     }
 
-    /**
-     * @dev Executes a queued transaction whose timelock has expired.
-     */
+    // Executes a queued transaction whose timelock has expired.
     function executeTransaction(
         address target,
         uint256 value,
@@ -108,8 +104,6 @@ contract TimelockExecutor is AccessControl, ReentrancyGuard {
         return returnData;
     }
 
-    /**
-     * @dev Allows the contract to receive ETH.
-     */
+    // Allows the contract to receive ETH.
     receive() external payable {}
 }

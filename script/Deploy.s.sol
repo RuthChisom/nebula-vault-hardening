@@ -5,10 +5,7 @@ import "forge-std/Script.sol";
 import "../src/HardenedEvictionVault.sol";
 import "../src/modules/TimelockExecutor.sol";
 
-/**
- * @title DeployScript
- * @notice Deployment script for the HardenedEvictionVault and associated modules.
- */
+//Deployment script for the HardenedEvictionVault and associated modules.
 contract DeployScript is Script {
     function run() external {
         // Retrieve deployment private key from environment

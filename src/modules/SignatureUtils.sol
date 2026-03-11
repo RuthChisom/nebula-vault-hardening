@@ -4,10 +4,7 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 
-/**
- * @title SignatureUtils
- * @notice Reusable signature verification logic using OpenZeppelin standards.
- */
+// Reusable signature verification logic using OpenZeppelin standards.
 library SignatureUtils {
     using MessageHashUtils for bytes32;
 

@@ -6,10 +6,7 @@ import "../interfaces/ITimelock.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title MultisigCore
- * @notice Core multisig logic with integrated timelock and role-based access control.
- */
+// Core multisig logic with integrated timelock and role-based access control.
 abstract contract MultisigCore is IMultisig, ITimelock, AccessControl, ReentrancyGuard {
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
     

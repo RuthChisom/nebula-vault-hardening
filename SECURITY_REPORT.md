@@ -8,10 +8,10 @@
 
 ---
 
-## 🔍 Executive Summary
+## Executive Summary
 The initial security assessment of the legacy *EvictionVault* revealed a catastrophic security posture, with multiple critical vulnerabilities that allowed for immediate and total loss of funds. Through a comprehensive refactoring and hardening process, the protocol has been transitioned to a modular, interface-driven architecture that satisfies modern DeFi security standards and 2026 threat models.
 
-## 🛠️ Remediation Summary: 15+ Vulnerabilities Fixed
+## Remediation Summary: 15+ Vulnerabilities Fixed
 The hardening process successfully identified and remediated over **15 critical vulnerabilities**, including:
 
 1.  **Access Control Failures**: Fixed open `emergencyWithdrawAll` and `setMerkleRoot` functions which lacked any caller validation.
@@ -30,18 +30,18 @@ The hardening process successfully identified and remediated over **15 critical 
 14. **Centralization Risk**: Transitioned administrative roles to the multisig itself.
 15. **Event Integrity**: Corrected event logging to use `msg.sender` instead of `tx.origin`.
 
-## 🏗️ Refactoring & Technical Challenges
-The primary challenge in refactoring this monolith into a modular architecture was maintaining compatibility under a strict **Solc 0.8.20** constraint. 
+## Refactoring & Technical Challenges
+The primary challenge in refactoring this project into a modular architecture was maintaining compatibility under a strict **Solc 0.8.20** constraint caused by my low systm OS. 
 
 Modern dependencies (OpenZeppelin 5.6.1) utilize the `mcopy` opcode, which is only available in Solc 0.8.24+. To ensure environment stability, I performed **surgical library patching**, manually replacing `mcopy` with a custom, legacy-compatible assembly loop in `Bytes.sol`. Additionally, moving to a multi-module inheritance pattern required a complex restructuring of the `supportsInterface` and visibility layers to resolve deep inheritance conflicts while preserving gas efficiency.
 
-## ⚖️ Feature Risk vs. Reward
+## Feature Risk vs. Reward
 The hardened architecture prioritizes **Security over Agility**. 
 
 - **Risk**: The integration of a mandatory 1-hour `TimelockExecutor` and a 24-hour `PauseModule` delay reduces the protocol's ability to react instantly to market volatility.
 - **Reward**: This trade-off effectively prevents "flash-governance" attacks and "malicious" updates. Users are now guaranteed a withdrawal window to exit the protocol before any major administrative changes take effect, significantly increasing the protocol's trust profile.
 
-## 🛡️ 2026 DeFi Threat Model
+## 2026 DeFi Threat Model
 In the current 2026 landscape, security goes beyond simple reentrancy protection. This vault is specifically hardened against:
 - **MEV-driven Governance Frontrunning**: Prevented by the mandatory 1-hour timelock.
 - **Cross-Chain Signature Replay**: Mitigated via EIP-191 compliant ECDSA verification.

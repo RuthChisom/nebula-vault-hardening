@@ -2,7 +2,7 @@
 
 A professional, modular, and security-hardened Solidity vault architecture designed to mitigate the vulnerabilities of traditional multi-signature vaults. This protocol integrates advanced governance features, including timelocked executions, Merkle-based airdrops, and role-based emergency controls.
 
-## 🏗 Architecture Overview
+## Architecture Overview
 
 The protocol is built on a modular "plug-and-play" architecture, where core logic is decoupled into specialized abstract contracts and interfaces. This design minimizes the attack surface and ensures that each component can be audited and upgraded independently.
 
@@ -13,7 +13,7 @@ The protocol is built on a modular "plug-and-play" architecture, where core logi
 
 ---
 
-## 🧩 Module Breakdown
+## Module Breakdown
 
 ### 1. MultisigCore
 A robust multi-signature implementation that manages owner roles and dynamic thresholds.
@@ -37,7 +37,7 @@ An advanced emergency circuit breaker.
 
 ---
 
-## 🛡 Security Hardening (Vs. Original)
+## Security Hardening (Vs. Original)
 
 | Feature | Original Vault | Hardened Protocol |
 | :--- | :--- | :--- |
@@ -51,7 +51,7 @@ An advanced emergency circuit breaker.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - [Foundry](https://book.getfoundry.sh/getting-started/installation)
@@ -84,11 +84,11 @@ forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast --verify
 
 ---
 
-## 📜 License
+## License
 This project is licensed under the **MIT License**.
 
 ## Security Analysis
 
 A detailed security review and threat model can be found in:
 
-➡️ [SECURITY_REPORT.md](https://github.com/RuthChisom/nebula-vault-hardening/blob/master/SECURITY_REPORT.md)
+[SECURITY_REPORT.md](https://github.com/RuthChisom/nebula-vault-hardening/blob/master/SECURITY_REPORT.md)

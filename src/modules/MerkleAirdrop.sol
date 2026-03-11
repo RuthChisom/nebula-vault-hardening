@@ -6,10 +6,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title MerkleAirdrop
- * @notice Logic for Merkle-based airdrop claims with administrative controls.
- */
+// Logic for Merkle-based airdrop claims with administrative controls.
 abstract contract MerkleAirdrop is IAirdrop, AccessControl, ReentrancyGuard {
     bytes32 public constant AIRDROP_MANAGER_ROLE = keccak256("AIRDROP_MANAGER_ROLE");
     
